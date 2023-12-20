@@ -108,7 +108,7 @@ if licenceDF is not None:
 
 st.write("**Most Frequent Pairings of Major Languages**")
 
-number = int(st.number_input("Insert a number", format = "%d", min_value = 2, value=10, placeholder="Type a number..."))
+number = int(st.number_input("Insert a number", format = "%d", min_value = 2, value=5, placeholder="Type a number..."))
 st.write('Showing the ', number, ' most common languages' )
 languages, z = load_commonly_combined(number)
 if languages is not None and z is not None:
