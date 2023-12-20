@@ -2,10 +2,7 @@ from datetime import datetime, timezone
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 import plotly.express as px
-import graphviz
-
 @st.cache_data
 def load_data():
     df = pd.read_csv("archive/repository_data.csv")
