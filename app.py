@@ -13,7 +13,7 @@ def load_data():
     df = df.sort_values(by=["year"])
     return df
 
-@st.cache_resource
+@st.cache_data
 def load_language_chart(languages):
     languageDF = None
     for i, language in enumerate(languages):
@@ -28,7 +28,7 @@ def load_language_chart(languages):
 
     return languageDF
 
-@st.cache_resource
+@st.cache_data
 def load_licence_chart(licences):
     licenceDF = None
     for i, licence in enumerate(licences):
@@ -43,7 +43,7 @@ def load_licence_chart(licences):
 
     return licenceDF
 
-@st.cache_resource
+@st.cache_data
 def load_commonly_combined(limit):
     if limit == 0:
         return None, None
@@ -66,7 +66,7 @@ def load_commonly_combined(limit):
         matrix.append(temp)
     return languages, matrix
 
-@st.cache_resource
+@st.cache_data
 def fork_to_pull_ratio(languages):
     dt = df[df["primary_language"].isin(languages)]
     fp = dt.groupby('primary_language')['forks_count'].sum().to_frame()
@@ -75,7 +75,7 @@ def fork_to_pull_ratio(languages):
     ds.reset_index(inplace=True)
     return ds
 
-@st.cache_resource
+@st.cache_data
 def commits_to_watchers_ratio(limit):
     dt = df.sort_values(by="stars_count", ascending = False)
 
