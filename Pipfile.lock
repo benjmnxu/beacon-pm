@@ -1,11 +1,10 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ae6cdead2683db0104447330cd4ebcafc4dec19232eae4a3c536ca048b04e1bd"
+            "sha256": "a1cc8d761cef9fdc1825cfe12e719d12cffca16ebbe0c81c44c7ad6b83a3464f"
         },
         "pipfile-spec": 6,
         "requires": {
-            "plotly": "5.18.0",
             "python_version": "3.11"
         },
         "sources": [
@@ -160,6 +159,14 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==8.1.7"
+        },
+        "git-lfs": {
+            "hashes": [
+                "sha256:2fecacaefc93ab278933b7755d4a48972f0deca7f9ff27439594ad835decf8ed",
+                "sha256:93a5e8a2bf71d66a9a5bae0d28c8137dd40c108dc3e1031fa6d30511794fae3a"
+            ],
+            "index": "pypi",
+            "version": "==1.6"
         },
         "gitdb": {
             "hashes": [
