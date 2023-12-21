@@ -103,7 +103,7 @@ col1, col2 = st.columns(2)
 df = load_data()
 
 col1.write("**Languages Used Over Time**")
-languages = col1.multiselect("Primary language", options = df["primary_language"].unique(), default = ["JavaScript", "Python", "Java", "C++", "PHP"])
+languages = ["JavaScript", "Python", "Java", "C++", "PHP"]
 
 languageDF = load_language_chart(languages)
 if languageDF is not None:
@@ -111,7 +111,7 @@ if languageDF is not None:
 
 
 col2.write("**Licences Being Used Over Time**")
-licences = col2.multiselect("Type of Licence", options = df["licence"].unique(), default = ["MIT License", "None", "Apache License 2.0", "GNU General Public License v3.0"])
+licences = ["MIT License", "None", "Apache License 2.0", "GNU General Public License v3.0"]
 
 licenceDF = load_licence_chart(licences)
 if licenceDF is not None:
@@ -119,7 +119,7 @@ if licenceDF is not None:
 
 st.write("**Most Frequent Pairings of Major Languages**")
 
-number = int(st.number_input("Insert a number", format = "%d", min_value = 2, value=5, placeholder="Type a number..."))
+number = 5
 caption = f'Showing the {number} most common languages' 
 st.write(caption)
 languages, z = load_commonly_combined(number)
@@ -128,14 +128,14 @@ if languages is not None and z is not None:
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 st.write("**Ratio of Forks to Watchers by Language**")
-languages = st.multiselect("Metric", options = df["primary_language"].unique(), default = ["JavaScript", "Python", "Plain Text", "Java", "C++", "PHP", "TypeScript", "C", "C#", "Go", "HTML", "Shell", "Jupyter Notebook", "Ruby", "CSS", "Objective-C"])
+languages = ["JavaScript", "Python", "Plain Text", "Java", "C++", "PHP", "TypeScript", "C", "C#", "Go", "HTML", "Shell", "Jupyter Notebook", "Ruby", "CSS", "Objective-C"]
 
 ratioDF = fork_to_pull_ratio(languages)
 if ratioDF is not None:
     st.scatter_chart(ratioDF, x = "forks_count", y = "watchers", color = "primary_language")
 
 st.write("**Relationship Between Commits and Pull Requests by Repository**")
-number2 = int(st.number_input("Insert a number", format = "%d", min_value = 1, value=10, placeholder="Type a number..."))
+number2 = 10
 caption2 = f"Showing the {number2} most common repositories"
 st.write(caption2)
 cToW = commits_to_watchers_ratio(number2)
