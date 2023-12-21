@@ -9,6 +9,7 @@ pandas = "*"
 streamlit = "*"
 numpy = "*"
 git-lfs = "*"
+watchdog = "*"
 
 [dev-packages]
 
