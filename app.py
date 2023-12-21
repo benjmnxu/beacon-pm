@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 
-@st.cache_data
+@st.cache_data(max_entries = 1)
 def load_data():
     df = pd.read_csv("https://www.dropbox.com/scl/fi/vsxwzit131pa4f71dgzkx/repository_data.csv?rlkey=egyy0zy0oepvak8fr1vijrplt&dl=1")
     df["primary_language"] = df["primary_language"].fillna("Plain Text")
@@ -13,7 +13,7 @@ def load_data():
     df = df.sort_values(by=["year"])
     return df
 
-@st.cache_data
+@st.cache_data(max_entries = 1)
 def load_language_chart(languages):
     languageDF = None
     if len(languages) > 0:
@@ -30,7 +30,7 @@ def load_language_chart(languages):
         df1 = None
     return languageDF
 
-@st.cache_data
+@st.cache_data(max_entries = 1)
 def load_licence_chart(licences):
     licenceDF = None
     if len(licences) > 0:
@@ -48,7 +48,7 @@ def load_licence_chart(licences):
 
     return licenceDF
 
-@st.cache_data
+@st.cache_data(max_entries = 1)
 def load_commonly_combined(limit):
     if limit == 0:
         return None, None
@@ -76,7 +76,7 @@ def load_commonly_combined(limit):
     other_languages = None
     return languages, matrix
 
-@st.cache_data
+@st.cache_data(max_entries = 1)
 def fork_to_pull_ratio(languages):
     dt = df[df["primary_language"].isin(languages)]
     fp = dt.groupby('primary_language')['forks_count'].sum().to_frame()
@@ -86,7 +86,7 @@ def fork_to_pull_ratio(languages):
     dt, fp, fr = None, None, None
     return ds
 
-@st.cache_data
+@st.cache_data(max_entries = 1)
 def commits_to_watchers_ratio(limit):
     dt = df.sort_values(by="stars_count", ascending = False)
 
@@ -117,15 +117,15 @@ licenceDF = load_licence_chart(licences)
 if licenceDF is not None:
     col2.area_chart(licenceDF, x="year", y=licences)
 
-col2.write("**Most Frequent Pairings of Major Languages**")
+st.write("**Most Frequent Pairings of Major Languages**")
 
 number = int(st.number_input("Insert a number", format = "%d", min_value = 2, value=5, placeholder="Type a number..."))
 caption = f'Showing the {number} most common languages' 
-col2.write(caption)
+st.write(caption)
 languages, z = load_commonly_combined(number)
 if languages is not None and z is not None:
     fig = px.imshow(z, labels = dict(x = "Language", y = "Language", color = "Occurrences"), x=languages, y = languages, text_auto=True)
-    col2.plotly_chart(fig, theme="streamlit", use_container_width=True)
+    st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 st.write("**Ratio of Forks to Watchers by Language**")
 languages = st.multiselect("Metric", options = df["primary_language"].unique(), default = ["JavaScript", "Python", "Plain Text", "Java", "C++", "PHP", "TypeScript", "C", "C#", "Go", "HTML", "Shell", "Jupyter Notebook", "Ruby", "CSS", "Objective-C"])
