@@ -30,23 +30,23 @@ def load_language_chart(languages):
         df1 = None
     return languageDF
 
-# @st.cache_data
-# def load_licence_chart(licences):
-#     licenceDF = None
-#     if len(licences) > 0:
-#         for i, licence in enumerate(licences):
-#             df1 = df[df["licence"] == licence].reset_index()
-#             df1[licence] = df1.groupby("licence").cumcount()
-#             right = df1.loc[df1.groupby("year")[licence].max()]
-#             right = right[["year", licence]]
-#             if i == 0:
-#                 licenceDF = right
-#             else:
-#                 licenceDF = pd.merge(licenceDF, right, how = "right", on="year")
-#         df1 = None
-#         right = None
+@st.cache_data
+def load_licence_chart(licences):
+    licenceDF = None
+    if len(licences) > 0:
+        for i, licence in enumerate(licences):
+            df1 = df[df["licence"] == licence].reset_index()
+            df1[licence] = df1.groupby("licence").cumcount()
+            right = df1.loc[df1.groupby("year")[licence].max()]
+            right = right[["year", licence]]
+            if i == 0:
+                licenceDF = right
+            else:
+                licenceDF = pd.merge(licenceDF, right, how = "right", on="year")
+        df1 = None
+        right = None
 
-#     return licenceDF
+    return licenceDF
 
 @st.cache_data
 def load_commonly_combined(limit):
@@ -110,12 +110,12 @@ if languageDF is not None:
     col1.area_chart(languageDF, x="year", y=languages)
 
 
-# col2.write("**Licences Being Used Over Time**")
-# licences = col2.multiselect("Type of Licence", options = df["licence"].unique(), default = ["MIT License", "None", "Apache License 2.0", "GNU General Public License v3.0"])
+col2.write("**Licences Being Used Over Time**")
+licences = col2.multiselect("Type of Licence", options = df["licence"].unique(), default = ["MIT License", "None", "Apache License 2.0", "GNU General Public License v3.0"])
 
-# licenceDF = load_licence_chart(licences)
-# if licenceDF is not None:
-#     col2.area_chart(licenceDF, x="year", y=licences)
+licenceDF = load_licence_chart(licences)
+if licenceDF is not None:
+    col2.area_chart(licenceDF, x="year", y=licences)
 
 col2.write("**Most Frequent Pairings of Major Languages**")
 
