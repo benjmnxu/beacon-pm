@@ -107,6 +107,7 @@ languages = ["JavaScript", "Python", "Java", "C++", "PHP"]
 languageDF = load_language_chart(languages)
 if languageDF is not None:
     st.area_chart(languageDF, x="year", y=languages)
+    languageDF = None
 
 
 # col2.write("**Licences Being Used Over Time**")
@@ -125,6 +126,7 @@ languages, z = load_commonly_combined(number)
 if languages is not None and z is not None:
     fig = px.imshow(z, labels = dict(x = "Language", y = "Language", color = "Occurrences"), x=languages, y = languages, text_auto=True)
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+    fig = None
 
 st.write("**Ratio of Forks to Watchers by Language**")
 languages = ["JavaScript", "Python", "Plain Text", "Java", "C++", "PHP", "TypeScript", "C", "C#", "Go", "HTML", "Shell", "Jupyter Notebook", "Ruby", "CSS", "Objective-C"]
@@ -132,6 +134,7 @@ languages = ["JavaScript", "Python", "Plain Text", "Java", "C++", "PHP", "TypeSc
 ratioDF = fork_to_pull_ratio(languages)
 if ratioDF is not None:
     st.scatter_chart(ratioDF, x = "forks_count", y = "watchers", color = "primary_language")
+    ratioDF = None
 
 st.write("**Relationship Between Commits and Pull Requests by Repository**")
 number2 = 10
@@ -139,3 +142,4 @@ caption2 = f"Showing the {number2} most common repositories"
 st.write(caption2)
 cToW = commits_to_watchers_ratio(number2)
 st.scatter_chart(cToW, x = "pull_requests", y = "commit_count", color = "name")
+cToW = None
