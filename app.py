@@ -91,20 +91,20 @@ st.set_page_config(page_title = "Data Dashboard", layout = "wide")
 col1, col2 = st.columns(2)
 df = load_data()
 
-col1.write("**Languages Used Over Time**")
-languages = col1.multiselect("Primary language", options = df["primary_language"].unique(), default = ["JavaScript", "Python", "Java", "C++", "PHP"])
+# col1.write("**Languages Used Over Time**")
+# languages = col1.multiselect("Primary language", options = df["primary_language"].unique(), default = ["JavaScript", "Python", "Java", "C++", "PHP"])
 
-languageDF = load_language_chart(languages)
-if languageDF is not None:
-    col1.area_chart(languageDF, x="year", y=languages)
+# languageDF = load_language_chart(languages)
+# if languageDF is not None:
+#     col1.area_chart(languageDF, x="year", y=languages)
 
 
-col2.write("**Licences Being Used Over Time**")
-licences = col2.multiselect("Type of Licence", options = df["licence"].unique(), default = ["MIT License", "None", "Apache License 2.0", "GNU General Public License v3.0"])
+# col2.write("**Licences Being Used Over Time**")
+# licences = col2.multiselect("Type of Licence", options = df["licence"].unique(), default = ["MIT License", "None", "Apache License 2.0", "GNU General Public License v3.0"])
 
-licenceDF = load_licence_chart(licences)
-if licenceDF is not None:
-    col2.area_chart(licenceDF, x="year", y=licences)
+# licenceDF = load_licence_chart(licences)
+# if licenceDF is not None:
+#     col2.area_chart(licenceDF, x="year", y=licences)
 
 st.write("**Most Frequent Pairings of Major Languages**")
 
