@@ -13,22 +13,22 @@ def load_data():
     df = df.sort_values(by=["year"])
     return df
 
-# @st.cache_data
-# def load_language_chart(languages):
-#     languageDF = None
-#     if len(languages) > 0:
-#         for i, language in enumerate(languages):
-#             df1 = df[df["primary_language"] == language].reset_index()
-#             df1[language] = df1.groupby("primary_language").cumcount()
-#             right = df1.loc[df1.groupby("year")[language].max()]
-#             right = right[["year", language]]
-#             if i == 0:
-#                 languageDF = right
-#             else:
-#                 languageDF = pd.merge(languageDF, right, how = "right", on="year")
-#         right = None
-#         df1 = None
-#     return languageDF
+@st.cache_data
+def load_language_chart(languages):
+    languageDF = None
+    if len(languages) > 0:
+        for i, language in enumerate(languages):
+            df1 = df[df["primary_language"] == language].reset_index()
+            df1[language] = df1.groupby("primary_language").cumcount()
+            right = df1.loc[df1.groupby("year")[language].max()]
+            right = right[["year", language]]
+            if i == 0:
+                languageDF = right
+            else:
+                languageDF = pd.merge(languageDF, right, how = "right", on="year")
+        right = None
+        df1 = None
+    return languageDF
 
 # @st.cache_data
 # def load_licence_chart(licences):
@@ -99,15 +99,15 @@ def commits_to_watchers_ratio(limit):
 
 
 st.set_page_config(page_title = "Data Dashboard", layout = "wide")
-# col1, col2 = st.columns(2)
+col1, col2 = st.columns(2)
 df = load_data()
 
-# col1.write("**Languages Used Over Time**")
-# languages = col1.multiselect("Primary language", options = df["primary_language"].unique(), default = ["JavaScript", "Python", "Java", "C++", "PHP"])
+col1.write("**Languages Used Over Time**")
+languages = col1.multiselect("Primary language", options = df["primary_language"].unique(), default = ["JavaScript", "Python", "Java", "C++", "PHP"])
 
-# languageDF = load_language_chart(languages)
-# if languageDF is not None:
-#     col1.area_chart(languageDF, x="year", y=languages)
+languageDF = load_language_chart(languages)
+if languageDF is not None:
+    col1.area_chart(languageDF, x="year", y=languages)
 
 
 # col2.write("**Licences Being Used Over Time**")
@@ -117,14 +117,14 @@ df = load_data()
 # if licenceDF is not None:
 #     col2.area_chart(licenceDF, x="year", y=licences)
 
-st.write("**Most Frequent Pairings of Major Languages**")
+col2.write("**Most Frequent Pairings of Major Languages**")
 
 number = int(st.number_input("Insert a number", format = "%d", min_value = 2, value=5, placeholder="Type a number..."))
-st.write('Showing the ', number, ' most common languages' )
+col2.write('Showing the ', number, ' most common languages' )
 languages, z = load_commonly_combined(number)
 if languages is not None and z is not None:
     fig = px.imshow(z, labels = dict(x = "Language", y = "Language", color = "Occurrences"), x=languages, y = languages, text_auto=True)
-    st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+    col2.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 st.write("**Ratio of Forks to Watchers by Language**")
 languages = st.multiselect("Metric", options = df["primary_language"].unique(), default = ["JavaScript", "Python", "Plain Text", "Java", "C++", "PHP", "TypeScript", "C", "C#", "Go", "HTML", "Shell", "Jupyter Notebook", "Ruby", "CSS", "Objective-C"])
