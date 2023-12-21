@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 
-@st.cache_data(max_entries = 1)
+@st.cache_data(ttl = 20, max_entries = 1)
 def load_data():
     df = pd.read_csv("https://www.dropbox.com/scl/fi/vsxwzit131pa4f71dgzkx/repository_data.csv?rlkey=egyy0zy0oepvak8fr1vijrplt&dl=1")
     df["primary_language"] = df["primary_language"].fillna("Plain Text")
@@ -13,7 +13,7 @@ def load_data():
     df = df.sort_values(by=["year"])
     return df
 
-@st.cache_data(max_entries = 1)
+@st.cache_data(ttl = 20, max_entries = 1)
 def load_language_chart(languages):
     languageDF = None
     if len(languages) > 0:
@@ -48,7 +48,7 @@ def load_language_chart(languages):
 
 #     return licenceDF
 
-@st.cache_data(max_entries = 1)
+@st.cache_data(ttl = 20, max_entries = 1)
 def load_commonly_combined(limit):
     if limit == 0:
         return None, None
@@ -76,7 +76,7 @@ def load_commonly_combined(limit):
     other_languages = None
     return languages, matrix
 
-@st.cache_data(max_entries = 1)
+@st.cache_data(ttl = 20, max_entries = 1)
 def fork_to_pull_ratio(languages):
     dt = df[df["primary_language"].isin(languages)]
     fp = dt.groupby('primary_language')['forks_count'].sum().to_frame()
@@ -86,7 +86,7 @@ def fork_to_pull_ratio(languages):
     dt, fp, fr = None, None, None
     return ds
 
-@st.cache_data(max_entries = 1)
+@st.cache_data(ttl = 20, max_entries = 1)
 def commits_to_watchers_ratio(limit):
     dt = df.sort_values(by="stars_count", ascending = False)
 
