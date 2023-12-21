@@ -6,7 +6,7 @@ import plotly.express as px
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("archive/repository_data.csv")
+    df = pd.read_csv("https://raw.githubusercontent.com/benjmnxu/beacon-pm/main/archive/repository_data.csv?token=GHSAT0AAAAAACHETBIXOV6TDPUFYTBMHWBYZMDSSFA")
     df["primary_language"] = df["primary_language"].fillna("Plain Text")
     df["licence"] = df["licence"].fillna("None")
     df["year"] = pd.to_datetime(df["created_at"]).dt.year
