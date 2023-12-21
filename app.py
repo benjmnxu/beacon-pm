@@ -114,7 +114,6 @@ number = 5 # int(st.number_input("Insert a number", format = "%d", min_value = 2
 st.write('Showing the ', number, ' most common languages' )
 heatmap = "heatmap.png"
 st.image(heatmap, output_format = "png")
-st.markdown(f"<img style='max-width: 100%;max-height: 100%;' src='data:image/png;base64, heatmap.png'/>", unsafe_allow_html=True)
 # languages, z = load_commonly_combined(number)
 # if languages is not None and z is not None:
 #     fig = px.imshow(z, labels = dict(x = "Language", y = "Language", color = "Occurrences"), x=languages, y = languages, text_auto=True)
