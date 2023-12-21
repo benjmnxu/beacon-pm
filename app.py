@@ -120,7 +120,7 @@ if languageDF is not None:
 col2.write("**Most Frequent Pairings of Major Languages**")
 
 number = int(st.number_input("Insert a number", format = "%d", min_value = 2, value=5, placeholder="Type a number..."))
-caption = 'Showing the ' + number + ' most common languages' 
+caption = f'Showing the {number} most common languages' 
 col2.write(caption)
 languages, z = load_commonly_combined(number)
 if languages is not None and z is not None:
@@ -136,6 +136,7 @@ if ratioDF is not None:
 
 st.write("**Relationship Between Commits and Pull Requests by Repository**")
 number2 = int(st.number_input("Insert a number", format = "%d", min_value = 1, value=10, placeholder="Type a number..."))
-st.write('Showing the ', number2, " most common repositories." )
+caption2 = f"Showing the {number2} most common repositories"
+st.write(caption2)
 cToW = commits_to_watchers_ratio(number2)
 st.scatter_chart(cToW, x = "pull_requests", y = "commit_count", color = "name")
