@@ -16,30 +16,35 @@ def load_data():
 @st.cache_data
 def load_language_chart(languages):
     languageDF = None
-    for i, language in enumerate(languages):
-        df1 = df[df["primary_language"] == language].reset_index()
-        df1[language] = df1.groupby("primary_language").cumcount()
-        right = df1.loc[df1.groupby("year")[language].max()]
-        right = right[["year", language]]
-        if i == 0:
-            languageDF = right
-        else:
-            languageDF = pd.merge(languageDF, right, how = "right", on="year")
-
+    if len(languages) > 0:
+        for i, language in enumerate(languages):
+            df1 = df[df["primary_language"] == language].reset_index()
+            df1[language] = df1.groupby("primary_language").cumcount()
+            right = df1.loc[df1.groupby("year")[language].max()]
+            right = right[["year", language]]
+            if i == 0:
+                languageDF = right
+            else:
+                languageDF = pd.merge(languageDF, right, how = "right", on="year")
+        right = None
+        df1 = None
     return languageDF
 
 @st.cache_data
 def load_licence_chart(licences):
     licenceDF = None
-    for i, licence in enumerate(licences):
-        df1 = df[df["licence"] == licence].reset_index()
-        df1[licence] = df1.groupby("licence").cumcount()
-        right = df1.loc[df1.groupby("year")[licence].max()]
-        right = right[["year", licence]]
-        if i == 0:
-            licenceDF = right
-        else:
-            licenceDF = pd.merge(licenceDF, right, how = "right", on="year")
+    if len(licences) > 0:
+        for i, licence in enumerate(licences):
+            df1 = df[df["licence"] == licence].reset_index()
+            df1[licence] = df1.groupby("licence").cumcount()
+            right = df1.loc[df1.groupby("year")[licence].max()]
+            right = right[["year", licence]]
+            if i == 0:
+                licenceDF = right
+            else:
+                licenceDF = pd.merge(licenceDF, right, how = "right", on="year")
+        df1 = None
+        right = None
 
     return licenceDF
 
@@ -64,6 +69,11 @@ def load_commonly_combined(limit):
                         if lan in index:
                             temp[np.where(languages==lan)[0][0]] += value
         matrix.append(temp)
+    ds = None
+    indices = None
+    values = None
+    temp = None
+    other_languages = None
     return languages, matrix
 
 @st.cache_data
@@ -73,6 +83,7 @@ def fork_to_pull_ratio(languages):
     fr = dt.groupby('primary_language')['watchers'].sum().to_frame()
     ds = fp.merge(fr, how = 'inner', on='primary_language')
     ds.reset_index(inplace=True)
+    dt, fp, fr = None, None, None
     return ds
 
 @st.cache_data
